@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nachschüssiger Rentenrechner</title> <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        body {
+            margin: 3%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nachschüssiger Rentenrechner</h1>
+
+    <label for="rente">Jährliche Rente:</label>
+    <input type="number" id="rente" value="500"><br><br>
+
+    <label for="zins">Jährlicher Zinssatz (%):</label>
+    <input type="number" id="zins" value="2"><br><br>
+
+    <label for="laufzeit">Laufzeit (Jahre):</label>
+    <input type="number" id="laufzeit" value="5"><br><br>
+
+    <button class="btn btn-primary" onclick="berechneRente()">Berechnen</button>
+
+    <div id="ausgabe"></div>
+    
+    <script>
+        function berechneRente() {
+            var jahr = parseInt(document.getElementById("laufzeit").value);
+            var rente = parseFloat(document.getElementById("rente").value);
+            var zins = parseFloat(document.getElementById("zins").value);
+
+            var ausgabe = '<table><thead><tr><th>Jahr</th><th>Rj</th><th>Zj</th><th>r</th><th>Rj + 1</th></tr></thead><tbody>';
+
+            var rj = 0; 
+
+            for (var i = 1; i <= jahr; i++) {
+                var rjPlus1 = rj + rente; 
+                var zj = rjPlus1 * (zins / 100); 
+                var r = rente; 
+
+               
+                rj = rjPlus1 + zj;
+
+               
+                ausgabe += '<tr><td>' + i + '</td><td>' + rjPlus1.toFixed(2) + '</td><td>' + zj.toFixed(2) + '</td><td>' + r.toFixed(2) + '</td><td>' + rj.toFixed(2) + '</td></tr>';
+            }
+
+            ausgabe += '</tbody></table>';
+            document.getElementById('ausgabe').innerHTML = ausgabe;
+        }
+    </script>
+</body>
+</html>
