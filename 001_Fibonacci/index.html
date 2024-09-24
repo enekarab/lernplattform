@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
+</br>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiboonacci Zahlen</title>
+</head>
+<body>
+<img src="./image.png" height="200px" width="320px">
+  <div>
+    <br></br>
+    <label for="start">Wie viel:</label>
+    <input type="number" id="start" min="1" value="">
+    <button onclick="ausgabeFiboonacci()">Berechnen</button>
+</div>
+
+<p>Die <span id="x"></span> Fiboonacci-Zahlen sind:</p>
+<p id="result"></p>
+
+<script>
+    function FiboonacciSchleife(x) {
+        let Fibo = [0, 1];
+      
+        if (x <= 0) return [];
+        if (x == 1) return [0];
+        if (x == 2) return Fibo;
+      
+        for (let i = 2; i < x; i++) {
+          const nextFibo = Fibo[i - 1] + Fibo[i - 2];
+          Fibo.push(nextFibo);
+        }
+        return Fibo;
+    }
+
+    function ausgabeFiboonacci() {
+        const start = parseInt(document.getElementById("start").value);
+        const FiboonacciReihe = FiboonacciSchleife(start);
+        document.getElementById("x").textContent = start;
+        document.getElementById("result").textContent = "Die " + start + " Fiboonacci-Zahlen sind: " + FiboonacciReihe.join(", ");
+    }
+</script>
+
+<div id="KA" class="copy_right_footer">
+  Developed By Enes F Karabag
+</div>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+.copy_right_footer {
+  position: fixed;
+  color: white;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  line-height: 3;
+  text-align: center;
+  font-family: 'Arial';
+}
+</style>
+</body>
+</html>
