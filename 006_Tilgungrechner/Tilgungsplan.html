@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilgungsplan</title> <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        function tilgungsplan() {
+            var Kreditsumme = parseFloat(document.getElementById("ID_Kreditsumme").value);
+            var Laufzeit = parseInt(document.getElementById("ID_Laufzeit").value);
+            var Zinssatz = parseFloat(document.getElementById("ID_Zinssatz").value) / 100;
+
+            var PresentValueFactor = 0;
+            for (var J = 0; J < Laufzeit; J++) {
+                PresentValueFactor += 1 / Math.pow(1 + Zinssatz, J + 1);
+            }
+            var Annuitat = Kreditsumme / PresentValueFactor;
+            var Restschuld = Kreditsumme;
+            var Gesamt = 0;
+
+            var vAusgabe = '<table class="table table-bordered"><thead><tr><th>Jahr</th><th>Schuld in €</th><th>Zinsen in €</th><th>Annuität in €</th><th>Tilgung in €</th><th>Restschuld in €</th></tr></thead><tbody>';
+
+            for (var jahr = 1; jahr <= Laufzeit; jahr++) {
+                var Zinsen = Restschuld * Zinssatz;
+                Gesamt += Zinsen;
+                var Tilgung = Annuitat - Zinsen;
+                Restschuld -= Tilgung;
+                if (Restschuld < 0) Restschuld = 0;
+
+                vAusgabe += '<tr><td>' + jahr + '</td><td>' + Kreditsumme.toFixed(2) + ' €</td><td>' + Zinsen.toFixed(2) + ' €</td><td>' + Annuitat.toFixed(2) + ' €</td><td>' + Tilgung.toFixed(2) + ' €</td><td>' + Restschuld.toFixed(2) + ' €</td></tr>';
+
+                Kreditsumme = Restschuld;
+            }
+
+            vAusgabe += '</tbody></table>';
+            vAusgabe += '<h4>Gesamtzins: ' + Gesamt.toFixed(2) + ' €</h4>';    
+            document.getElementById("ID_Output").innerHTML = vAusgabe;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Tilgungsplan</h1>
+        <div class="form-group">
+            <label for="ID_Kreditsumme">Kreditbetrag:</label>
+            <input type="text" id="ID_Kreditsumme" class="form-control" value="400000">
+        </div>
+        <div class="form-group">
+            <label for="ID_Laufzeit">Laufzeit (Jahre):</label>
+            <input type="text" id="ID_Laufzeit" class="form-control" value="20">
+        </div>
+        <div class="form-group">
+            <label for="ID_Zinssatz">Zinssatz (%):</label>
+            <input type="text" id="ID_Zinssatz" class="form-control" value="5">
+        </div>
+        <button class="btn btn-primary" onclick="tilgungsplan();">Berechne</button>
+        <div id="ID_Output" class="mt-4"></div>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
