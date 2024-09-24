@@ -1,0 +1,86 @@
+	<head>
+    <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
+  </br>
+		<title>Eisverkauf - Gelato</title> 
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
+			"use strict";
+			function fErloesrechner() {
+			// Quellcode
+    var vProduktionsmenge;
+    var vAusgabe;
+    var vKV;
+    var vKF;
+    var vStueckPreis;
+    var vE, vG;
+    var vBEP;
+    var vGewinnschwelle;
+    var vMenge = 0;
+
+    vProduktionsmenge = parseFloat(document.getElementById("idProduktionsmenge").value);
+    vStueckPreis = parseFloat(document.getElementById("idPreis").value);
+
+    vKV = parseFloat(document.getElementById("idKV").value);
+    vKF = parseFloat(document.getElementById("idKF").value);
+
+    vAusgabe = "";
+    vAusgabe += "<table border=1>";
+    vAusgabe += "<tr><th>Menge</th><th>Kosten K(x) = " + vKF + " + " + vKV + " * x </th><th>Erlöse E (x) = " + vStueckPreis + " * x </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
+
+    for (vMenge = 0; vMenge <= vProduktionsmenge; vMenge += 100) {
+        var kosten = vKF + vKV * vMenge;
+        var erloes = vStueckPreis * vMenge;
+        var gewinn = erloes - kosten;
+        var bemerkung = gewinn < 0 ? "Verlustzone" : "Gewinnzone";
+
+        vAusgabe += "<tr><td>" + vMenge + "</td><td>" + kosten.toFixed(2) + " €" + "</td><td>" + erloes.toFixed(2) + " €" + "</td><td>" + gewinn.toFixed(2) + " €" + "</td><td>" + bemerkung + "</td></tr>";
+    }
+
+    vBEP = vKF / (vStueckPreis - vKV);
+    vBEP = Math.ceil(vBEP); // Aufrunden auf ganze Stückzahlen
+
+    vGewinnschwelle = vBEP * vStueckPreis;
+
+    vAusgabe += "</table></br>";
+    vAusgabe += "Break-Even-Point (Stück): " + vBEP + " Stück" + "<br>";
+	vAusgabe += "-------------------------------------------" + "</br>";
+    vAusgabe += "Break-Even-Point (Euro): " + (vBEP * vStueckPreis).toFixed(2) + " €" + "<br>";
+
+    document.getElementById("idAusgabe").innerHTML = vAusgabe;
+}
+</script></head>
+
+
+
+<div id="KA" class="copy_right_footer">
+  Developed By Enes F Karabag
+</div>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+.copy_right_footer {
+  position: fixed;
+  color: white;
+  bottom: 0;
+  width: 100%;
+  background-color: black;
+  line-height: 3;
+  text-align: center;
+  font-family: 'Arial';
+}
+
+</style>
+
+
+	<body>
+	<img src="eis.PNG" width="440px" height="260px">
+	
+	
+		<h1>Eisverkauf-Gelato</h1>
+	Kosten-Variabel(k, pro Eiskugel): <input id="idKV" value="0.50" size="6">
+		Kosten-Fix: <input id="idKF" value="500.00" size="6"><br/><br/>
+		Verkaufsmenge(x): <input id="idProduktionsmenge" value="1000" size="6">
+		Stückpreis(p): <input id="idPreis" value="1.50" size="6">
+		<button onclick="fErloesrechner();">Kostentabelle!</button><br><br>
+        <div id="idAusgabe"></div>
+
+
+</body></html>
