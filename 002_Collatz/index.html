@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tilgungsplan</title> <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
+</br>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3n + 1</title>
+</head>
+
+<body> 
+
+    <h1>Collatz-Folge und das 3n+1 Problem...</h1>
+    <input id="idZahl" type="number" value="">
+    <button onclick="fDo();">Berechnen!</button><br><br> 
+    <div id="idAusgabeHtml">Hier kommt die Rechnung...</div>
+    <style>
+        body{
+            margin: 2%;
+        }
+    </style>
+    <script>
+        function fDo() {
+            var vZahl = parseInt(document.getElementById("idZahl").value);
+            var vAusgabeHtml = "";
+
+            while (vZahl != 1) {
+                if (vZahl % 2 == 0) {
+                    vZahl = vZahl / 2;
+                } else {
+                    vZahl = 3 * vZahl + 1;
+                }
+                vAusgabeHtml = vAusgabeHtml + vZahl + "->";
+            }
+				
+		
+            document.getElementById("idAusgabeHtml").innerHTML = vAusgabeHtml;
+        }
+    </script>
+</body>
+</html>
