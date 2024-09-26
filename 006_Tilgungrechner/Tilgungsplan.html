@@ -18,11 +18,11 @@
             var Laufzeit = parseInt(document.getElementById("ID_Laufzeit").value);
             var Zinssatz = parseFloat(document.getElementById("ID_Zinssatz").value) / 100;
 
-            var PresentValueFactor = 0;
+            var presenteee = 0;
             for (var J = 0; J < Laufzeit; J++) {
-                PresentValueFactor += 1 / Math.pow(1 + Zinssatz, J + 1);
+                presenteee += 1 / Math.pow(1 + Zinssatz, J + 1);
             }
-            var Annuitat = Kreditsumme / PresentValueFactor;
+            var Annuitat = Kreditsumme / presenteee;
             var Restschuld = Kreditsumme;
             var Gesamt = 0;
 
