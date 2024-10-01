@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <title>Druckervergleich</title> <a href="../index.html"><button class="btn btn-primary">Hauptseite</button></a>
@@ -17,6 +18,16 @@
                 <label for="idKostenProSeiteEco">Kosten pro Seite Eco Plus:</label>
                 <input id="idKostenProSeiteEco" class="form-control" type="number" value="0.06" step="0.01" placeholder="in €">
             </div>
+
+            <div class="form-group">
+                <label for="idAnschaffungspreisExtended">Anschaffungspreis Extended:</label>
+                <input id="idAnschaffungspreisExtended" class="form-control" type="number" value="250" placeholder="in €">
+            </div>
+            <div class="form-group">
+                <label for="idKostenProSeiteExtended">Kosten pro Seite Extended:</label>
+                <input id="idKostenProSeiteExtended" class="form-control" type="number" value="0.07" step="0.01" placeholder="in €">
+            </div>
+
             <div class="form-group">
                 <label for="idAnschaffungspreisSmart">Anschaffungskosten Smart Print:</label>
                 <input id="idAnschaffungspreisSmart" class="form-control" type="number" value="200" placeholder="in €">
@@ -29,12 +40,12 @@
             <div class="form-group"></div>
                 <label for="idplattpapier">Wie viel Blatt nutzen Sie in einem Jahr:</label>
                 <input id="idplattpapier" class="form-control" type="number" value="9000" min="1000" step="1000" placeholder="Stück">
-            </div>
-        </br>
+            </form></div>
+        <br>
             <button type="button" class="btn btn-primary" onclick="fDruck();">Kalkuliere!</button>
-        </form>
+        
         <div class="mt-4" id="idAusgabe"></div>
-    </div>
+    
 
 
     <script src="./Druckervergleich_files/jquery-3.5.1.slim.min.js.Download"></script>
@@ -43,59 +54,51 @@
 
     <script>
 
-    function fDruck() {
-   
-    var vAnschaffungsPreisEco = parseFloat(document.getElementById("idAnschaffungspreisECO").value);
-    var vAnschaffungsPreisSmart = parseFloat(document.getElementById("idAnschaffungspreisSmart").value);
-    var vKostenProSeiteEco = parseFloat(document.getElementById("idKostenProSeiteEco").value);
-    var vKostenProSeiteSmart = parseFloat(document.getElementById("idKostenProSeiteSmart").value);
-    var vAusgabeHTML = "";
-    var vStart = 1000;
-    var vplattpapier = parseFloat(document.getElementById("idplattpapier").value);
-    var vXK = vplattpapier; 
+function fDruck() {     
+    var vAnschaffungsPreisEco = parseFloat(document.getElementById("idAnschaffungspreisECO").value);     
+    var vAnschaffungsPreisSmart = parseFloat(document.getElementById("idAnschaffungspreisSmart").value);     
+    var vAnschaffungsPreisExtended = parseFloat(document.getElementById("idAnschaffungspreisExtended").value);     
+    var vKostenProSeiteEco = parseFloat(document.getElementById("idKostenProSeiteEco").value);     
+    var vKostenProSeiteExtended = parseFloat(document.getElementById("idKostenProSeiteExtended").value);     
+    var vKostenProSeiteSmart = parseFloat(document.getElementById("idKostenProSeiteSmart").value);     
+    var vAusgabeHTML = "";     
+    var vStart = 1000;     
+    var vplattpapier = parseFloat(document.getElementById("idplattpapier").value);     
+    var vXK = vplattpapier;
 
- 
-    vAusgabeHTML = vAusgabeHTML + "<table class='table table-striped table-bordered'>";
-    vAusgabeHTML = vAusgabeHTML + "<thead class='thead-dark'><tr><th>Seitenzahl</th>";
-    vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Eco</th>";
-    vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Smart</th>";
-    vAusgabeHTML = vAusgabeHTML + "<th>Bemerkung</th></tr></thead><tbody>";
+    vAusgabeHTML = vAusgabeHTML + "<table class='table table-striped table-bordered'>";    
+    vAusgabeHTML = vAusgabeHTML + "<thead class='thead-dark'><tr><th>Seitenzahl</th>";    
+    vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Eco</th>";     
+    vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Extended</th>";     
+    vAusgabeHTML = vAusgabeHTML + "<th>Gesamtkosten Smart</th>";     
+    vAusgabeHTML = vAusgabeHTML + "<th>Bemerkung</th></tr></thead><tbody>";  
 
-    while (vStart <= vXK) {
-       
-        var vGesamtkostenEco = vAnschaffungsPreisEco + (vStart * vKostenProSeiteEco);
-        var vGesamtkostenSmart = vAnschaffungsPreisSmart + (vStart * vKostenProSeiteSmart);
-        
-       
-        vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td>";
-        vAusgabeHTML = vAusgabeHTML + "<td>" + vGesamtkostenEco.toFixed(2) + " €</td>";
-        vAusgabeHTML = vAusgabeHTML + "<td>" + vGesamtkostenSmart.toFixed(2) + " €</td>";
+                while (vStart <= vXK) {         
 
-   
-        if (vGesamtkostenEco < vGesamtkostenSmart) {
-            vAusgabeHTML = vAusgabeHTML + "<td>Eco ist günstiger!</td></tr>";
-        } else if (vGesamtkostenEco > vGesamtkostenSmart) {
-            vAusgabeHTML = vAusgabeHTML + "<td>Smart ist günstiger!</td></tr>";
-        } else {
-            vAusgabeHTML = vAusgabeHTML + "<td style='background-color: grey;'>Kritische Menge!</td></tr>";
-        }
+                    var vGesamtkostenEco = vAnschaffungsPreisEco + (vStart * vKostenProSeiteEco);         
+                    var vGesamtkostenExtended = vAnschaffungsPreisExtended + (vStart * vKostenProSeiteExtended);         
+                    var vGesamtkostenSmart = vAnschaffungsPreisSmart + (vStart * vKostenProSeiteSmart);
 
-      
-        vStart += 1000;
-    }
+                        vAusgabeHTML = vAusgabeHTML + "<tr><td>" + vStart + "</td>";      
+                        vAusgabeHTML = vAusgabeHTML + "<td>" + vGesamtkostenEco.toFixed(2) + " €</td>";         
+                        vAusgabeHTML = vAusgabeHTML + "<td>" + vGesamtkostenExtended.toFixed(2) + " €</td>";        
+                        vAusgabeHTML = vAusgabeHTML + "<td>" + vGesamtkostenSmart.toFixed(2) + " €</td>";
 
-   
-    vAusgabeHTML = vAusgabeHTML + "</tbody></table>";
-
-
-    document.getElementById("idAusgabe").innerHTML = vAusgabeHTML;
-}
-
-
-
-
-
-
+                        if (vGesamtkostenEco < vGesamtkostenSmart && vGesamtkostenEco < vGesamtkostenExtended) {            
+                            vAusgabeHTML = vAusgabeHTML + "<td>Eco ist günstiger!</td></tr>";         
+                        } else if (vGesamtkostenSmart < vGesamtkostenEco && vGesamtkostenSmart < vGesamtkostenExtended) {             
+                            vAusgabeHTML = vAusgabeHTML + "<td>Smart ist günstiger!</td></tr>";         
+                        } else if (vGesamtkostenExtended < vGesamtkostenSmart && vGesamtkostenExtended < vGesamtkostenEco) {             
+                            vAusgabeHTML = vAusgabeHTML + "<td>Extended ist günstiger!</td></tr>";         
+                        } else if (vGesamtkostenExtended === vGesamtkostenSmart && vGesamtkostenExtended == vGesamtkostenEco) {             
+                            vAusgabeHTML = vAusgabeHTML + "<td style='background-color: green;'>Kritische Menge!</td></tr>";         
+                        }         
+                        
+                vStart += 1000;    
+            }    
+            
+            vAusgabeHTML = vAusgabeHTML + "</tbody></table>";     
+            document.getElementById("idAusgabe").innerHTML = vAusgabeHTML; }
 
 
     </script>
